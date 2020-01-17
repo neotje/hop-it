@@ -1,0 +1,28 @@
+$theme-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)
+$theme-shadow-heavy: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)
+
+*
+    scroll-behavior: smooth;
+
+@mixin transition-all($duration)
+    transition: all $duration cubic-bezier(.25,.8,.25,1);
+    transition: opacity $duration cubic-bezier(.25,.8,.25,1);
+
+@mixin transition-color($duration)
+    transition: color $duration cubic-bezier(.25,.8,.25,1);
+
+@mixin transition-prop($properties, $duration)
+    $val: ""
+    $i: 1
+    @each $prop in $properties
+        
+        @if $i > 1
+            $val: $val + ", "
+
+        $val: $val + "#{$prop}"
+        $i: $i + 1
+    
+    transition-property: #{$val}
+    transition-duration: $duration
+    transition-timing-function: cubic-bezier(.25,.8,.25,1)
+    

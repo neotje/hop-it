@@ -1,0 +1,34 @@
+extends layout
+
+block content
+    script(src="javascripts/portfolio.js")
+    section(class='landing')
+        div(class='landing__text')
+            h1 Neo Hop
+            p Full Stack Developer
+        
+        button(class='button--secondary button_next-section')
+            i(class='material-icons') keyboard_arrow_down
+    
+    section(class='about')
+        div(class='spacer-sides')
+        div(class='spacer-center')
+            h1 Over mij
+            p
+                | Ik ben neo 
+        div(class='spacer-center')
+        div(class='spacer-sides')
+    
+    section(class='work')
+        div(class='spacer-sides')
+        div(class='spacer-center')
+            h1 Projecten
+            div(class='projects')
+                each project in projects
+                    div(class='projects_item', onclick='window.open("' + project.url + '", "_blank")')
+                        img(src=project.img, alt="")
+                        div(class='projects_info')
+                            h1= project.title
+                            p= project.description
+
+        div(class='spacer-sides')

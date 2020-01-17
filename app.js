@@ -17,6 +17,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(logger('dev'));
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
 
 // sccs prepocessor middleware
 app.use(sassMiddleware({
@@ -24,16 +30,9 @@ app.use(sassMiddleware({
     dest: __dirname + config.get('sass.dest'),
     debug: true,
     indentedSyntax: true,
-    outputStyle: 'compressed',
-    prefix: '/css'
+    outputStyle: 'compressed'
 }));
 
-app.use(logger('dev'));
-app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

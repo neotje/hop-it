@@ -1,0 +1,97 @@
+@import 'colors'
+@import 'enviroment'
+    
+.button_next-section
+    position: absolute
+    bottom: 1rem
+    left: 50%
+    transform: translate(-50%, -50%)
+
+    &, .material-icons
+        font-size: 5rem
+        font-weight: 600 !important
+
+
+
+.about
+    width: 100%
+    color: $theme-primary
+
+    h1
+        font-size: 3rem
+
+    p 
+        font-size: 2rem
+
+    .spacer
+        &-sides, &-center
+            display: inline-block
+
+        &-sides
+            width: 15%
+
+        &-center
+            width: 35%
+
+
+
+.work
+    width: 100%
+    color: $theme-primary
+    padding-bottom: 2rem
+
+    h1
+        font-size: 3rem
+
+    p 
+        font-size: 2rem
+
+    .spacer
+        &-sides, &-center
+            display: inline-block
+
+        &-sides
+            width: 15%
+
+        &-center
+            width: 70%                
+
+    .projects
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+        justify-content: space-evenly
+
+        &_item
+            box-shadow: $theme-shadow
+            height: 480px
+            width: 360px
+            overflow: hidden
+            position: relative
+            
+            &, img
+                @include transition-all(0.3s)
+
+            &:hover
+                box-shadow: $theme-shadow-heavy
+                cursor: pointer
+
+            img
+                height: 100%
+                transform: translate(-50%, -50%)
+                top: 50%
+                left: 50%
+                position: absolute
+                opacity: 0.5
+
+                &:hover
+                    opacity: 1
+
+            .projects_info
+                position: absolute
+                bottom: 0
+                margin: 1rem
+                h1
+                    font-size: 2rem
+                p
+                    font-size: 1rem

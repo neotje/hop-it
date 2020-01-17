@@ -1,0 +1,43 @@
+@import 'colors'
+@import 'enviroment'
+    
+.button
+    &, &--primary, &--secondary
+        border-radius: 0.8rem
+        text-align: center
+        display: block
+        text-decoration: none
+        padding: 0.7rem 2rem
+        font-weight: 500 !important
+        @include transition-color(0.3s)
+
+        &:hover, label:hover
+            cursor: pointer
+
+        &:focus
+            outline: none
+
+        label
+            vertical-align: middle
+
+        .material-icons
+            vertical-align: middle
+            margin-right: 0.3rem
+
+    &
+        border: 2px solid $theme-primary
+        background-color: #00000000
+        color: $theme-primary
+
+    &--primary
+        background-color: $theme-primary
+        color: $theme-on-primary
+        border: none
+        
+    &--secondary
+        background-color: #00000000
+        color: $theme-secondary
+        border: none
+
+        &:hover
+            color: $theme-primary

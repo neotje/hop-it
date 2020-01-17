@@ -1,0 +1,131 @@
+@import 'colors'
+@import 'enviroment'
+
+$top-bar_height: 5rem
+
+.content
+    z-index: 0
+
+.top-bar
+    width: 100%
+    height: $top-bar_height
+    position: fixed
+    top: 0
+    display: block
+    z-index: 1
+    border-bottom: solid 1px
+
+    &_logo
+        display: block
+        float: left
+        margin-left: 2rem
+        position: relative
+        height: 100%
+        width: calc( #{$top-bar_height} - 1rem )
+        img
+            top: 50%
+            position: absolute
+            transform: translateY(-50%)
+            height: calc( #{$top-bar_height} - 1rem )
+
+    &_crumble
+        display: block
+        float: left
+        margin-left: 1rem
+        position: relative
+        top: 50%
+        transform: translateY(-50%)
+
+        a
+            text-decoration: none
+            vertical-align: middle
+            font-weight: 600
+            @include transition-color(0.3s)
+
+            &:hover
+                color: lighten($theme-primary, 30%) !important
+
+            &:first-child
+                font-size: 2rem
+                color: $theme-primary
+            
+            &:not(:first-child)
+                color: $theme-faded
+                font-size: 1rem
+                margin-left: 0.5rem
+
+                &::before
+                    content: 'keyboard_arrow_right'
+                    font-family: 'Material Icons'
+                    font-style: normal
+                    vertical-align: middle
+                    font-size: 0.25 * $top-bar_height
+                    line-height: 1
+                    letter-spacing: normal
+                    text-transform: none;
+                    margin-right: 0.4rem
+                        
+    &_collection
+        &, &--center, &--right
+            display: block
+            position: absolute
+            top: 50%
+            transform: translateY(-50%)
+            float: left
+
+        &--center
+            left: 50%
+            transform: translate(-50%, -50%) !important
+        
+        &--right
+            right: 0;
+            margin-right: 2rem
+
+    &_nav-link
+        color: $theme-primary
+        text-decoration: none
+        font-weight: 500
+        vertical-align: middle
+        margin: 0 1rem
+        @include transition-color(0.3s)
+
+        &:hover
+            color: lighten($theme-primary, 30%)
+
+    &_button
+        &, &--primary, &--secondary
+            border-radius: 0.8rem
+            text-align: center
+            display: inline-block
+            text-decoration: none
+            padding: 0.7rem 2rem
+            font-weight: 500 !important
+            @include transition-color(0.3s)
+
+            &:hover, label:hover
+                cursor: pointer
+
+            label
+                vertical-align: middle
+
+            .material-icons
+                vertical-align: middle
+                margin-right: 0.3rem
+
+        &
+            border: 2px solid $theme-primary
+            background-color: #00000000
+            color: $theme-primary
+
+        &--primary
+            background-color: $theme-primary
+            color: $theme-on-primary
+            border: none
+        
+        &--secondary
+            background-color: #00000000
+            color: $theme-secondary
+            border: none
+
+            &:hover
+                color: $theme-primary
