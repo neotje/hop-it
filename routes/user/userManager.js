@@ -1,3 +1,5 @@
+"use strict";
+
 const config = require('config');
 const test = config.get('test');
 const bcrypt = require('bcrypt');
@@ -30,7 +32,6 @@ mongoose.connect(config.get('userManager.mongodb'), { useNewUrlParser: true, aut
 
 
 var userSchema = new mongoose.Schema({
-    id: { type: String, default: uuidv4 },
     email: { type: String, required: [true, 'email missing'], lowercase: true },
     password: { type: String, required: [true, 'password missing'] },
     verify: {
@@ -50,7 +51,6 @@ var userSchema = new mongoose.Schema({
     }
 });
 var User = mongoose.model('User', userSchema);
-
 
 exports.create = function (email, password, personal, callback) {
     if (password.trim() == '') {
@@ -79,6 +79,16 @@ exports.create = function (email, password, personal, callback) {
     });
 }
 
+exports.isUser = function (id, callback) {
+    User.findById(id, 'length', (err, docs) => {
+        if (docs.length) {
+            callback(true);
+        } else {
+            callback(false);
+        }
+    });
+}
+
 
 exports.sendVerification = function (user, callback) {
     // generate new verification data.
@@ -101,15 +111,17 @@ exports.sendVerification = function (user, callback) {
         })
     }, (err, info) => {
         if (err) return callback(err);
-        callback();
+        callback(user);
     });
 }
 
-console.log(new Date());
+exports.login = function (email, password, callback) {
+    var err;
+    User.findOne({ email: email }, (err, user) => {
+        if (err) return callback(err, user);
 
-
-
-exports.create('neotje111@gmail.com', 'test12345', { firstname: 'neo', lastname: 'hop', gender: 'male' }, (r) => {
-    console.log(r);
-
-});
+        bcrypt.compare(password, user, (err, res) => {
+            
+        });
+    })
+}
