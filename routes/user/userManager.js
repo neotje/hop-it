@@ -34,6 +34,7 @@ mongoose.connect(config.get('userManager.mongodb'), { useNewUrlParser: true, aut
 var userSchema = new mongoose.Schema({
     email: { type: String, required: [true, 'email missing'], lowercase: true },
     password: { type: String, required: [true, 'password missing'] },
+    firstMessage: { type: String},
     verify: {
         state: { type: Boolean, default: false },
         token: { type: String, default: uuidv4 },
@@ -53,15 +54,19 @@ var userSchema = new mongoose.Schema({
 var User = mongoose.model('User', userSchema);
 
 exports.create = function (email, password, personal, callback) {
-    if (password.trim() == '') {
-        callback(new Error('Password empty'));
+    var error;
+
+    if (!password || password.trim() == '') {
+        error = new Error('Password missing');
+        callback(error);
     }
 
     bcrypt.hash(password, 10, (err, hash) => {
         // check if user exists
         User.find({ email: email }, (err, docs) => {
             if (docs.length) {
-                callback(new Error('User already exists'));
+                error = new Error('User already exists');
+                callback(error);
             } else {
                 // create new user model and save to db.
                 User.create({
@@ -72,7 +77,7 @@ exports.create = function (email, password, personal, callback) {
                     if (err) return callback(err);
 
                     // send verification mail
-                    exports.sendVerification(newUser, callback);
+                    callback(error, newUser)
                 });
             }
         });
@@ -91,6 +96,8 @@ exports.isUser = function (id, callback) {
 
 
 exports.sendVerification = function (user, callback) {
+    var error;
+
     // generate new verification data.
     user.verify.date = Date.now();
     user.verify.token = uuidv4();
@@ -100,8 +107,8 @@ exports.sendVerification = function (user, callback) {
 
     // send mail to user.
     mailTransport.sendMail({
-        from: user.email,
-        to: 'neotje111@gmail.com',
+        from: 'neotje111@gmail.com',
+        to: user.email,
         subject: 'Please verify your Hop-IT account',
         text: 'Hello world?',
         html: compileMail({
@@ -111,17 +118,21 @@ exports.sendVerification = function (user, callback) {
         })
     }, (err, info) => {
         if (err) return callback(err);
-        callback(user);
+        callback(error);
     });
 }
 
 exports.login = function (email, password, callback) {
-    var err;
     User.findOne({ email: email }, (err, user) => {
-        if (err) return callback(err, user);
+        if (err) return callback(err);
+        if (!user) return callback(new Error('user does not exist'));
+        if (!user.verify.state) return callback(new Error('user not verified'));
 
-        bcrypt.compare(password, user, (err, res) => {
-            
+        bcrypt.compare(password, user.password, (err, res) => {
+            if (err) return callback(err);
+
+            if (!res) return callback(new Error('password does not match'))
+            if (res) return callback(err, user);
         });
-    })
+    });
 }

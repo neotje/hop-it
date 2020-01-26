@@ -7,7 +7,7 @@
         text-align: center
         display: block
         text-decoration: none
-        padding: 0.7rem 2rem
+        padding: 0.7rem 1.5rem
         font-weight: 500 !important
         @include transition-color(0.3s)
 
@@ -20,9 +20,14 @@
         label
             vertical-align: middle
 
+            & + .material-icons
+                margin-left: 0.3rem
+
+            & ~ .material-icons
+                margin-right: 0.3rem
+
         .material-icons
             vertical-align: middle
-            margin-right: 0.3rem
 
     &
         border: 2px solid $theme-primary

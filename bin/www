@@ -9,6 +9,12 @@ var debug = require('debug')('hop-it:server');
 var http = require('http');
 
 /**
+ * Create socket.io instance
+ */
+var chatSocket = require('../routes/chat/chatSocket');
+
+
+/**
  * Get port from environment and store in Express.
  */
 
@@ -19,7 +25,8 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.Server(app);
+chatSocket.io.attach(server);
 
 /**
  * Listen on provided port, on all network interfaces.

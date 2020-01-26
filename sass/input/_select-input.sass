@@ -1,0 +1,19 @@
+@import 'colors'
+@import 'enviroment'
+    
+.select-input
+    height: 49px
+    color: $theme-primary
+    width: 100%
+    padding: 1rem
+    margin: 0.5rem 0
+    box-sizing: border-box
+    border: 1px solid lighten($theme-primary, 50%)
+    border-radius: 0.5rem
+    @include transition-prop([box-shadow, border-color], 0.15s)
+
+    &:focus
+        border-color: $theme-primary
+        box-shadow: $theme-shadow
+        outline: none
+        

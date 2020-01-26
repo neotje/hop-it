@@ -1,0 +1,55 @@
+@import 'colors'
+@import 'enviroment'
+@import 'navigation/top-bar'
+
+.bulletin_list
+    position: fixed
+    right: 2rem
+    top: $top-bar_height
+    width: 300px
+
+    .bulletin
+        color: $theme-primary
+        padding: 0.5rem
+        margin-top: 1rem
+        width: 100%
+
+        &::before
+            font-size: 3rem
+            font-family: 'Material Icons'
+            display: inline-block
+            float: left
+            margin-right: 0.5rem
+
+        &[level='good']
+            background-color: transparentize(green, 0.8)
+            &::before
+                color: transparentize(darken(green, 5%), 0.2)
+                content: "thumb_up"
+                
+
+        &[level='warning']
+            background-color: transparentize(yellow, 0.8)
+            &::before
+                color: transparentize(darken(yellow, 10%), 0.3)
+                content: "warning"
+        
+        &[level='alert']
+            background-color: transparentize($theme-warning, 0.8)
+            &::before
+                color: transparentize(darken($theme-warning, 10%), 0.3)
+                content: "error"
+
+        &[level='info']
+            background-color: transparentize($theme-primary, 0.8)
+            &::before
+                color: transparentize(darken($theme-primary, 10%), 0.3)
+                content: "info"
+
+        h1
+            font-size: 1.1rem
+            margin: 0
+        p
+            font-size: 0.9rem
+            margin-top: 0.5rem
+            margin-bottom: 0

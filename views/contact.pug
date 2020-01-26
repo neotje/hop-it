@@ -1,0 +1,28 @@
+extends layout
+
+block content
+    script(src="javascripts/contact.js")
+    section(class="landing")
+        form(class="contact__form")
+            h1 Contact formulier
+
+            input(class="text-input", type="email", name="email", placeholder="Email", autocomplete="email", required)
+
+            input(class="text-input", type="password", name="password", placeholder="Wachtwoord*", autocomplete="new-password", required)
+            p(class="sub-text") *Wachtwoord is nodig voor verder contact via deze website.
+
+            div(class="form-field")
+
+                input(class="text-input", type="text", name="firstname", placeholder="Voornaam", autocomplete="given-name", required)
+                input(class="text-input", type="text", name="lastname", placeholder="Achternaam", autocomplete="family-name", required)
+
+                select(class="select-input", name="gender", placeholder="Geslacht", required)
+                    option(value="male") Man
+                    option(value="female") Vrouw
+                    option(value="other") Anders
+
+            textarea(class="text-input", rows="10", name="message" placeholder="Bericht...", required)
+
+            button(class="button--primary contact__form-submit", type="submit")
+                label Versturen
+                i(class='material-icons') send

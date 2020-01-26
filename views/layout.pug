@@ -7,6 +7,7 @@ html
 
         script(src="javascripts/lib/jquery.js")
         script(src="javascripts/lib/anime.js")
+        script(src="/socket.io/socket.io.js")
 body
     header(class='top-bar')
         div(class='top-bar_logo')
@@ -15,11 +16,14 @@ body
         div(class='top-bar_crumble')
             a(href='/') Hop-IT
             -
-                var pathList = path.split('/');
-                pathList = pathList.filter(function (el) {
-                    return el != null && el != "";
-                });
-                var last = '/';
+                var pathList = [];
+                if (path) {
+                    pathList = path.split('/');
+                    pathList = pathList.filter(function (el) {
+                        return el != null && el != "";
+                    });
+                    var last = '/';
+                }
 
             each item in pathList
                 a(href=last + item)= item
@@ -29,10 +33,30 @@ body
             a(class='top-bar_nav-link' href="/portfolio") Portfolio
             a(class='top-bar_nav-link' href="/contact") Contact
 
-        div(class='top-bar_collection--right')
-            button(class='top-bar_button--secondary' type='button') 
-                i(class='material-icons') lock
-                label Log In
+        if session.user
+            div(class='top-bar_collection--right')= session.user.email
+        else
+            div(class='top-bar_collection--right')
+                button(class='top-bar_button--secondary' type='button') 
+                    i(class='material-icons') lock
+                    label Log In
+
+    div(class='bulletin_list')
+        div(class='bulletin', level='good')
+            h1 Test bericht.
+            p Hallo mensen dit is een test bullutin.
+
+        div(class='bulletin', level='warning')
+            h1 Test bericht.
+            p Hallo mensen dit is een test bullutin.
+
+        div(class='bulletin', level='alert')
+            h1 Test bericht.
+            p Hallo mensen dit is een test bullutin.
+
+        div(class='bulletin', level='info')
+            h1 Test bericht.
+            p Hallo mensen dit is een test bullutin.
 
     div(class='content')
         block content
