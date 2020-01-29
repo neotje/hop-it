@@ -7,49 +7,74 @@
     right: 2rem
     top: $top-bar_height
     width: 300px
+    z-index: 2
 
     .bulletin
         color: $theme-primary
+        position: relative
         padding: 0.5rem
         margin-top: 1rem
         width: 100%
+        border: 1px solid
+        border-radius: 0.5rem
+        box-shadow: $theme-shadow
+        display: flex
+        align-items: center
+        @include transition-prop([box-shadow], 0.15s)
 
-        &::before
+        &:hover
+            box-shadow: $theme-shadow-heavy
+
+        i
             font-size: 3rem
             font-family: 'Material Icons'
-            display: inline-block
-            float: left
             margin-right: 0.5rem
 
         &[level='good']
             background-color: transparentize(green, 0.8)
-            &::before
+            border-color: green
+            i
                 color: transparentize(darken(green, 5%), 0.2)
-                content: "thumb_up"
                 
 
         &[level='warning']
             background-color: transparentize(yellow, 0.8)
-            &::before
+            border-color: gold
+            i
                 color: transparentize(darken(yellow, 10%), 0.3)
-                content: "warning"
         
-        &[level='alert']
+        &[level='error']
             background-color: transparentize($theme-warning, 0.8)
-            &::before
+            border-color: $theme-warning
+            i
                 color: transparentize(darken($theme-warning, 10%), 0.3)
-                content: "error"
 
         &[level='info']
             background-color: transparentize($theme-primary, 0.8)
-            &::before
+            border-color: $theme-primary
+            i
                 color: transparentize(darken($theme-primary, 10%), 0.3)
-                content: "info"
 
-        h1
-            font-size: 1.1rem
-            margin: 0
-        p
-            font-size: 0.9rem
-            margin-top: 0.5rem
-            margin-bottom: 0
+        &_close-button
+            background: none
+            text-decoration: none
+            border: none
+            display: block
+            padding: 0
+            position: absolute
+            top: 0
+            right: 0
+
+            &:hover
+                cursor: pointer
+
+        &_text
+            h1
+                font-size: 1.1rem
+                width: auto
+                margin: 0
+            p
+                font-size: 0.9rem
+                margin-top: 0.5rem
+                margin-bottom: 0.5rem
+                width: auto

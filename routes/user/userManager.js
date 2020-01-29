@@ -8,6 +8,8 @@ const pug = require('pug');
 const mailer = require('nodemailer');
 const mongoose = require('mongoose');
 
+const chat = require('../chat/chat')
+
 
 // create mail tranporter
 if (test) {
@@ -34,7 +36,8 @@ mongoose.connect(config.get('userManager.mongodb'), { useNewUrlParser: true, aut
 var userSchema = new mongoose.Schema({
     email: { type: String, required: [true, 'email missing'], lowercase: true },
     password: { type: String, required: [true, 'password missing'] },
-    firstMessage: { type: String},
+    firstMessage: { type: String, default: undefined },
+    role: { type: String, enum: ['customer', 'admin'], required: [true, 'no role specified'] },
     verify: {
         state: { type: Boolean, default: false },
         token: { type: String, default: uuidv4 },
@@ -53,7 +56,7 @@ var userSchema = new mongoose.Schema({
 });
 var User = mongoose.model('User', userSchema);
 
-exports.create = function (email, password, personal, callback) {
+exports.create = function (email, password, personal, role, callback) {
     var error;
 
     if (!password || password.trim() == '') {
@@ -72,7 +75,8 @@ exports.create = function (email, password, personal, callback) {
                 User.create({
                     email: email,
                     password: hash,
-                    personal: personal
+                    personal: personal,
+                    role: role
                 }, (err, newUser) => {
                     if (err) return callback(err);
 
@@ -85,7 +89,10 @@ exports.create = function (email, password, personal, callback) {
 }
 
 exports.isUser = function (id, callback) {
-    User.findById(id, 'length', (err, docs) => {
+    User.find({_id: id}, 'length', (err, docs) => {
+        if (err) {
+            throw err; 
+        }
         if (docs.length) {
             callback(true);
         } else {
@@ -103,7 +110,7 @@ exports.sendVerification = function (user, callback) {
     user.verify.token = uuidv4();
 
     // save to database.
-    user.save();
+    user.save();    
 
     // send mail to user.
     mailTransport.sendMail({
@@ -114,11 +121,25 @@ exports.sendVerification = function (user, callback) {
         html: compileMail({
             firstname: user.firstname,
             lastname: user.lastname,
-            verificationURL: "localhost:3000/user/verify?token=" + user.verify.token
+            verificationURL: "http://localhost:3000?token=" + user.verify.token
         })
     }, (err, info) => {
         if (err) return callback(err);
         callback(error);
+    });
+}
+
+exports.verify = function (token, callback) {
+    var error;
+
+    User.findOne({ 'verify.token': token }, (err, user) => {
+        if (err) return callback(err);
+        if (!user) return callback(new Error('verification token is not valid'));
+        if (user.verify.state) return callback(new Error('this account is already verified'))
+
+        user.verify.state = true;
+        user.save();
+        return callback(error);
     });
 }
 

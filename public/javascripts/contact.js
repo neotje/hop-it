@@ -6,6 +6,9 @@ $(document).ready(() => {
     form.submit((e)=>{
         e.preventDefault();
 
+        console.log(e);
+        
+
         var email = form[0]['email'].value;
         var password = form[0]['password'].value;
         var personal = {
@@ -22,7 +25,9 @@ $(document).ready(() => {
             firstMessage: firstMessage
         }, json=>{
             if (!json.error) {
-                
+                document.querySelector('.bulletin_list').BulletinManager.add('good', 'Controleer je mailbox', 'Er is een verificatie mail verzonden. Op het moment dat je je account verifieert, kan Hop-IT contact met je opnemen.');
+            } else {
+                document.querySelector('.bulletin_list').BulletinManager.add('error', 'Fout', 'Error: "' + json.error + '".');
             }
         }, 'json');
     });
