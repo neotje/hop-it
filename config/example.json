@@ -1,0 +1,18 @@
+{
+    "sass": {
+        "src": "/sass",
+        "dest": "/public/style.css"
+    },
+    "pages": {
+        "protfolio":{
+            "projects":[
+                {
+                    "title": "NeoWeb",
+                    "description": "",
+                    "url": "http://www.neo-web.nl",
+                    "img": "/images/neo-web.png"
+                }
+            ]
+        }
+    }
+}

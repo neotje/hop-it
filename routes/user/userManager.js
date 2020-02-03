@@ -8,8 +8,6 @@ const pug = require('pug');
 const mailer = require('nodemailer');
 const mongoose = require('mongoose');
 
-const chats = require('../chat/chat')
-
 
 // create mail tranporter
 if (test) {
