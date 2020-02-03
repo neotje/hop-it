@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    script(src="javascripts/contact.js")
+    section(class="landing")
+        form(class="contact__form")
+            h1 Login
+
+            input(class="text-input", type="email", name="email", placeholder="Email", autocomplete="email", required)
+
+            input(class="text-input", type="password", name="password", placeholder="Wachtwoord*", autocomplete="new-password", required)
+
+            button(class="button--primary contact__form-submit", type="submit")
+                span inloggen
+                i(class='material-icons') check

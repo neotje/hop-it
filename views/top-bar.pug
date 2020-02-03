@@ -1,0 +1,31 @@
+header(class='top-bar')
+    div(class='top-bar_logo')
+        img(src="/images/hop-it_logo-2.png" alt="")
+
+    div(class='top-bar_crumble')
+        a(href='/') Hop-IT
+        -
+            var pathList = [];
+            if (path) {
+                pathList = path.split('/');
+                pathList = pathList.filter(function (el) {
+                    return el != null && el != "";
+                });
+                var last = '/';
+            }
+
+        each item in pathList
+            a(href=last + item)= item
+            - last = last + item + '/';
+
+    div(class='top-bar_collection--center')
+        a(class='top-bar_nav-link' href="/portfolio") Portfolio
+        a(class='top-bar_nav-link' href="/contact") Contact
+
+    if session.user
+        div(class='top-bar_collection--right')= session.user.email
+    else
+        div(class='top-bar_collection--right')
+            button(class='top-bar_button--secondary' type='button') 
+                i(class='material-icons') lock
+                label Log In

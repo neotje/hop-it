@@ -1,5 +1,6 @@
 var express = require('express');
 var userManager = require('./user/userManager');
+var chats = require('./chat/chat');
 
 var router = express.Router();
 
@@ -48,10 +49,22 @@ router.post('/register', function (req, res, next) {
 router.post('/verify', function (req, res, next) {
     if (!req.body.token) return res.json({ error: 'token missing' });
 
-    userManager.verify(req.body.token, (err)=>{
+    userManager.verify(req.body.token, (err, user)=>{
         if (err) return res.json({ error: err.message });
 
-        res.json({ error: false });
+        chats.create('hop-it', [
+            {
+                uuid: user.uuid,
+                name: user.personal.firstname + ' ' + user.personal.lastname
+            },
+            {
+                uuid: 'admin',
+                name: 'Hop-IT'
+            },
+        ], (err)=>{
+            if (err) return res.json({ error: err.message });
+            res.json({ error: false });
+        });
     });
 });
 

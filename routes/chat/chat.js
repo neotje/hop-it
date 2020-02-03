@@ -1,46 +1,54 @@
 "use strict";
 
 const config = require('config');
+const events = require('events');
+const chatEvents = new events.EventEmitter();
 const mongoose = require('mongoose');
 const userManager = require('../user/userManager');
 const uuidv4 = require('uuid/v4');
 
-const ChatService = require('chat-service');
-const service = new ChatService(options, hooks);
-
-exports.create = function (whitelist) {
-    var owner = 'admin'
-    var whitelistOnly = true
-    var state = { owner, whitelistOnly, whitelist }
-    chatService.addRoom('someRoom', state).then(fn)
-}
 
 
-
-
-/*
 // connect to database
 mongoose.connect(config.get('userManager.mongodb'), { useNewUrlParser: true, autoIndex: false, useUnifiedTopology: true });
 
+
+
 var memberSchema = new mongoose.Schema({
-    id: { type: String, required: [true, 'id missing'] },
+    uuid: { type: String, required: [true, 'id missing'] },
     name: { type: String, required: [true, 'name missing'] }
 });
 
 var messageSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now },
     sender: memberSchema,
-    type: { type: String, default: "text", required: [true, 'type missing'] },
+    type: { type: String, default: 'text', required: [true, 'type missing'] },
     content: { type: String, required: [true, 'content missing'] }
 });
 
 var chatSchema = new mongoose.Schema({
+    uuid: { type: String, default: uuidv4, required: [true, 'uuid missing']},
     name: { type: String, required: [true, 'name missing'] },
     members: [memberSchema],
     messages: [messageSchema]
 });
 
-var Chat = mongoose.model("Chat", chatSchema);
+var Chat = mongoose.model('Chat', chatSchema);
+
+
+Chat.watch().on('change', data => {
+    Chat.findById(data.documentKey, (err, doc)=>{
+        console.log(doc);
+        
+        chatEvents.emit(doc.uuid, doc);
+    });    
+});
+
+
+
+exports.listen = function(uuid, listener) {
+    chatEvents.on(uuid, listener);
+}
 
 exports.create = function (name, membersArr, callback) {
     var error;
@@ -53,13 +61,13 @@ exports.create = function (name, membersArr, callback) {
 
     function next(i) {
         if (i < membersArr.length) {
-            console.log(membersArr[i].id);
+            console.log(membersArr[i].uuid);
 
-            if (membersArr[i].id == "admin") {
+            if (membersArr[i].uuid == "admin") {
                 i++;
                 next(i);
             } else {
-                userManager.isUser(mongoose.Types.ObjectId(membersArr[i].id), (result) => {
+                userManager.isUser(membersArr[i].uuid, (result) => {
                     if (!result) {
                         callback(new Error('One of the members does not exist!'));
                     } else {
@@ -84,21 +92,40 @@ exports.create = function (name, membersArr, callback) {
     }
 }
 
-exports.getChatList = function(user) {
-    Chat.find({})
+exports.getChatList = function(uuid, callback) {
+    var error;
+
+    Chat.find({'members.uuid': uuid}, (err, docs) => {
+        if (err) {
+            callback(err);
+        }
+        if (docs.length) {
+            callback(error, docs);
+        } else {
+            callback(new Error('user does not particapate in any chat.'))
+        }
+    });
 }
 
 exports.session = class {
-    constructor(user, chatId) {
+    constructor(chat, member) {
         this.db = mongoose.connect(config.get('userManager.mongodb'), { useNewUrlParser: true, autoIndex: false, useUnifiedTopology: true });
-        this.chat = Chat.findById(chatId);
-        this.user = await this.chat.members.findOne({id:user.id});
+        this.chat = chat;
+        this.member = member;
     }
 
     send(content) {
+        var member = this.member
         this.chat.messages.push({
+            sender: member,
+            content: content
+        });
+        this.chat.save();
+    }
 
-        })
+    listen(listener) {
+        chatEvents.on(this.chat.uuid, listener);
+        console.log(chatEvents);
+        
     }
 }
-*/

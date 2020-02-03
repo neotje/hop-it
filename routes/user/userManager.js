@@ -8,7 +8,7 @@ const pug = require('pug');
 const mailer = require('nodemailer');
 const mongoose = require('mongoose');
 
-const chat = require('../chat/chat')
+const chats = require('../chat/chat')
 
 
 // create mail tranporter
@@ -34,6 +34,7 @@ mongoose.connect(config.get('userManager.mongodb'), { useNewUrlParser: true, aut
 
 
 var userSchema = new mongoose.Schema({
+    uuid: { type: String, default: uuidv4, required: [true, 'uuid missing']},
     email: { type: String, required: [true, 'email missing'], lowercase: true },
     password: { type: String, required: [true, 'password missing'] },
     firstMessage: { type: String, default: undefined },
@@ -88,8 +89,8 @@ exports.create = function (email, password, personal, role, callback) {
     });
 }
 
-exports.isUser = function (id, callback) {
-    User.find({_id: id}, 'length', (err, docs) => {
+exports.isUser = function (uuid, callback) {
+    User.find({uuid: uuid}, 'length', (err, docs) => {
         if (err) {
             throw err; 
         }
@@ -139,7 +140,7 @@ exports.verify = function (token, callback) {
 
         user.verify.state = true;
         user.save();
-        return callback(error);
+        return callback(error, user);
     });
 }
 

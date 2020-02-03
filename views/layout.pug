@@ -1,45 +1,9 @@
 doctype html
 html
     head
-        title= title
-        link(rel='stylesheet' href='style.css')
-        meta(name="viewport" content="width=device-width, initial-scale=1.0")
-
-        script(src="javascripts/lib/jquery.js")
-        script(src="javascripts/lib/anime.js")
-        script(src="/socket.io/socket.io.js")
+        include head
     body
-        header(class='top-bar')
-            div(class='top-bar_logo')
-                img(src="images/hop-it_logo-2.png" alt="")
-
-            div(class='top-bar_crumble')
-                a(href='/') Hop-IT
-                -
-                    var pathList = [];
-                    if (path) {
-                        pathList = path.split('/');
-                        pathList = pathList.filter(function (el) {
-                            return el != null && el != "";
-                        });
-                        var last = '/';
-                    }
-
-                each item in pathList
-                    a(href=last + item)= item
-                    - last = last + item + '/';
-
-            div(class='top-bar_collection--center')
-                a(class='top-bar_nav-link' href="/portfolio") Portfolio
-                a(class='top-bar_nav-link' href="/contact") Contact
-
-            if session.user
-                div(class='top-bar_collection--right')= session.user.email
-            else
-                div(class='top-bar_collection--right')
-                    button(class='top-bar_button--secondary' type='button') 
-                        i(class='material-icons') lock
-                        label Log In
+        include top-bar
 
         div(class='bulletin_list')
 
@@ -47,4 +11,4 @@ html
             block content
 
 script(type="module") import { ui } from '/javascripts/ui/ui.mjs'; $(document).ready(ui.init);
-script(src="javascripts/script.js")
+script(src="/javascripts/script.js")
