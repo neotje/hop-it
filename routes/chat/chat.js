@@ -10,7 +10,7 @@ const uuidv4 = require('uuid/v4');
 
 
 // connect to database
-mongoose.connect(config.get('userManager.mongodb'), { useNewUrlParser: true, autoIndex: false, useUnifiedTopology: true });
+mongoose.connect(config.get('mongodb'), { useNewUrlParser: true, autoIndex: false, useUnifiedTopology: true });
 
 
 
@@ -109,7 +109,6 @@ exports.getChatList = function(uuid, callback) {
 
 exports.session = class {
     constructor(chat, member) {
-        this.db = mongoose.connect(config.get('userManager.mongodb'), { useNewUrlParser: true, autoIndex: false, useUnifiedTopology: true });
         this.chat = chat;
         this.member = member;
     }

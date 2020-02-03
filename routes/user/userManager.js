@@ -28,7 +28,7 @@ const compileMail = pug.compileFile('./routes/user/mail.pug');
 
 
 // connect to database
-mongoose.connect(config.get('userManager.mongodb'), { useNewUrlParser: true, autoIndex: false, useUnifiedTopology: true });
+mongoose.connect(config.get('mongodb'), { useNewUrlParser: true, autoIndex: false, useUnifiedTopology: true });
 
 
 var userSchema = new mongoose.Schema({

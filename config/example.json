@@ -1,4 +1,5 @@
 {
+    "test": true,
     "sass": {
         "src": "/sass",
         "dest": "/public/style.css"
@@ -14,5 +15,21 @@
                 }
             ]
         }
-    }
+    },
+    "userManager":{
+        "tokenExpiration": "hours"
+    },
+    "nodemailer": {
+        "host": "smtp server address",
+        "secureConnection": true,
+        "port": 587,
+        "tls": {
+            "cipher": "SSLv3"
+        },
+        "auth": {
+            "user": "username or email",
+            "pass": "password"
+        }
+    },
+    "mongodb": "connect link"
 }
