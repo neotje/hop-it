@@ -5,7 +5,7 @@
         "dest": "/public/style.css"
     },
     "pages": {
-        "protfolio":{
+        "portfolio":{
             "projects":[
                 {
                     "title": "NeoWeb",

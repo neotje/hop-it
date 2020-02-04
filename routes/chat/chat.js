@@ -16,7 +16,8 @@ mongoose.connect(config.get('mongodb'), { useNewUrlParser: true, autoIndex: fals
 
 var memberSchema = new mongoose.Schema({
     uuid: { type: String, required: [true, 'id missing'] },
-    name: { type: String, required: [true, 'name missing'] }
+    name: { type: String, required: [true, 'name missing'] },
+    chatName: { type: String, required: [true, 'chatName missing'] }
 });
 
 var messageSchema = new mongoose.Schema({

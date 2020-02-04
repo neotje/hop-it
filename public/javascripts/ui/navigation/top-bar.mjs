@@ -20,7 +20,7 @@ export class topBar {
 
             if (scrollTop < window.innerHeight) {
                 var scrollPercent = scrollTop / (window.innerHeight/2);
-                console.log(scrollPercent * this._anim.duration);
+                //console.log(scrollPercent * this._anim.duration);
                 
                 
                 this._anim.seek(scrollPercent * this._anim.duration);

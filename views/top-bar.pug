@@ -22,10 +22,11 @@ header(class='top-bar')
         a(class='top-bar_nav-link' href="/portfolio") Portfolio
         a(class='top-bar_nav-link' href="/contact") Contact
 
-    if session.user
-        div(class='top-bar_collection--right')= session.user.email
+    if session != undefined && session.user != undefined
+        div(class='top-bar_collection--right')
+            include user/user-dropdown
     else
         div(class='top-bar_collection--right')
-            button(class='top-bar_button--secondary' type='button') 
+            button(class='top-bar_button--secondary' type='button', onclick='window.location.href = "/me/login"') 
                 i(class='material-icons') lock
                 label Log In

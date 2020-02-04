@@ -17,8 +17,6 @@ router.post('/login', function (req, res, next) {
         if (err) return res.json({ error: err.message });
 
         req.session.user = user;
-        req.session.chats = [];
-
         
         res.json({ error: false });
     });
@@ -55,11 +53,13 @@ router.post('/verify', function (req, res, next) {
         chats.create('hop-it', [
             {
                 uuid: user.uuid,
-                name: user.personal.firstname + ' ' + user.personal.lastname
+                name: user.personal.firstname + ' ' + user.personal.lastname,
+                chatName: 'Hop-IT'
             },
             {
                 uuid: 'admin',
-                name: 'Hop-IT'
+                name: 'Hop-IT',
+                chatName: user.personal.firstname + ' ' + user.personal.lastname
             },
         ], (err)=>{
             if (err) return res.json({ error: err.message });

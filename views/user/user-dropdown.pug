@@ -1,0 +1,8 @@
+div(class='drop-down')
+    button(class='drop-down__button top-bar_button--secondary ')= session.user.email
+        i(class='material-icons') arrow_drop_down
+    ul(class='drop-down__list')
+        li
+            a(href="/me") Dashboard
+        li
+            a(href="/me/logout") Uitloggen

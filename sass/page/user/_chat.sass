@@ -1,0 +1,126 @@
+@import 'colors'
+@import 'enviroment'
+@import 'navigation/top-bar'
+
+.chat
+    position: relative
+    display: flex
+    flex-direction: row
+    max-width: 1440px
+    width: 100vw
+    max-height: calc(800px - #{$top-bar-height})
+    height: calc(100vh - #{$top-bar-height})
+    top: calc(50%)
+    left: 50%
+    transform: translate(-50%, -50%)
+    box-shadow: $theme-shadow
+
+    &__list
+        position: relative
+        flex: 30%
+        height: 100%
+        max-height: 100%
+        min-width: 250px
+        border-right: 1px solid rgba(0, 0, 0, 0.1)
+        overflow: auto
+
+        &-item
+            display: block
+            height: 5rem
+            @include transition-prop([background-color], 0.3s)
+
+            &[active='true']
+                background-color: rgba(0, 0, 0, 0.03)
+
+            &:hover
+                background-color: rgba(0, 0, 0, 0.02)
+                cursor: pointer
+
+            &__last-message
+                margin: 0
+                margin-left: 1rem
+                margin-top: 2px
+                font-size: 0.8rem
+                color: gray
+                text-overflow: ellipsis
+                white-space: nowrap
+                overflow: hidden
+                max-width: 100%
+
+            &__name
+                margin: 0
+                margin-left: 1rem
+                font-size: 1.25rem
+                color: $theme-primary
+
+            &__content
+                margin-left: 1rem
+                margin-right: 1rem
+                border-bottom: 1px solid lighten($theme-primary, 60%)
+
+                &-text
+                    display: inline-flex
+                    flex-direction: column
+                    max-width: calc(100% - 5rem)
+                        
+
+                svg
+                    display: inline-block
+                    vertical-align: middle
+                    height: 3rem
+                    width: 3rem
+                    margin-top: 1rem
+                    margin-bottom: 1rem
+    
+    &__room
+        flex: 70%
+        display: flex
+        flex-direction: column-reverse
+
+        &__messages
+            display: none
+            overflow: auto
+
+            &[active='true']
+                display: block
+
+        &__message
+            display: block
+            widows: 100%
+            display: flex
+
+            &[from='me']
+                justify-content: flex-end
+
+                .chat__room__message-content
+                    background-color: transparentize($theme-secondary, 0.8)
+
+            &-content
+                margin: 1rem 5rem
+                border-radius: 0.5rem
+                padding: 0.5rem
+                box-shadow: $theme-shadow
+                min-width: 120px
+                max-width: 50%
+
+            &-text
+                margin: 0
+                display: inline-block
+                white-space: pre-wrap
+
+            &-time
+                text-align: right
+                margin: 0
+                margin-top: 2px
+                font-size: 0.6rem
+
+
+        &__input-bar
+            display: flex
+            border-top: 1px solid rgba(0, 0, 0, 0.1)
+            background-color: rgba(0, 0, 0, 0.02)
+            flex-direction: row
+            align-items: baseline
+            padding: 1rem
+            
+            

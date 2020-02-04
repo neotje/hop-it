@@ -14,6 +14,11 @@ $top-bar_height: 5rem
     display: block
     z-index: 1
     border-bottom: solid 1px
+    @include transition-prop([border-color, box-shadow], 0.3s)
+
+    &:hover
+        border-color: #1a237e !important
+        box-shadow: $theme-shadow !important
 
     &_logo
         display: block
@@ -48,7 +53,7 @@ $top-bar_height: 5rem
             &:first-child
                 font-size: 2rem
                 color: $theme-primary
-            
+
             &:not(:first-child)
                 color: $theme-faded
                 font-size: 1rem
@@ -62,9 +67,9 @@ $top-bar_height: 5rem
                     font-size: 0.25 * $top-bar_height
                     line-height: 1
                     letter-spacing: normal
-                    text-transform: none;
+                    text-transform: none
                     margin-right: 0.4rem
-                        
+
     &_collection
         &, &--center, &--right
             display: block
@@ -76,9 +81,9 @@ $top-bar_height: 5rem
         &--center
             left: 50%
             transform: translate(-50%, -50%) !important
-        
+
         &--right
-            right: 0;
+            right: 0
             margin-right: 2rem
 
     &_nav-link
@@ -121,7 +126,7 @@ $top-bar_height: 5rem
             background-color: $theme-primary
             color: $theme-on-primary
             border: none
-        
+
         &--secondary
             background-color: #00000000
             color: $theme-secondary

@@ -1,0 +1,35 @@
+@import 'colors'
+@import 'enviroment'
+
+.drop-down
+    position: relative
+    display: inline-block
+
+    &__list
+        display: none
+        position: absolute
+        list-style-type: none
+        margin: 0
+        padding: 0.5rem
+        right: 4rem
+        background-color: white
+        @include transition-all(0.3s)
+
+        li
+            text-align: right
+            margin: 0.5rem 1rem
+
+            a
+                color: $theme-primary
+                text-decoration: none
+                font-weight: 500
+                vertical-align: middle
+                margin: 0
+                @include transition-color(0.3s)
+
+                &:hover
+                    color: lighten($theme-primary, 30%)
+
+    &:hover &__list, &__list:hover
+        display: block
+            

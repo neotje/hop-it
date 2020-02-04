@@ -25,7 +25,7 @@ $(document).ready(() => {
             firstMessage: firstMessage
         }, json=>{
             if (!json.error) {
-                document.querySelector('.bulletin_list').BulletinManager.add('good', 'Controleer je mailbox', 'Er is een verificatie mail verzonden. Op het moment dat je je account verifieert, kan Hop-IT contact met je opnemen.');
+                document.querySelector('.bulletin_list').BulletinManager.add('good', 'Controleer u mailbox', 'Er is een verificatie mail verzonden. Op het moment dat u uw account verifieert, kan Hop-IT contact met je opnemen.');
             } else {
                 document.querySelector('.bulletin_list').BulletinManager.add('error', 'Fout', 'Error: "' + json.error + '".');
             }

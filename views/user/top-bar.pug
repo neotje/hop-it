@@ -18,13 +18,14 @@ header(class='top-bar')
             a(href=last + item)= item
             - last = last + item + '/';
 
-    if session.user
+    if session.user != undefined
         div(class='top-bar_collection--center')
             a(class='top-bar_nav-link' href="/me") Dashboard
             a(class='top-bar_nav-link' href="/me/account") Profiel
             a(class='top-bar_nav-link' href="/me/chat") Berichten
             
-        div(class='top-bar_collection--right')= session.user.email
+        div(class='top-bar_collection--right')
+            include user-dropdown
     else
         div(class='top-bar_collection--right')
             button(class='top-bar_button--secondary' type='button') 

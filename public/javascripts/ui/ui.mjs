@@ -1,5 +1,6 @@
 import { topBar } from "./navigation/top-bar.mjs";
 import { BulletinManager } from "./bulletin/bulletinManager.mjs";
+import { chatManager } from "./chat/chat.mjs";
 
 export var ui = {}
 
@@ -13,6 +14,11 @@ var components = [
         "class": ".bulletin_list",
         "key": "BulletinManager",
         "constructor": BulletinManager
+    },
+    {
+        "class": ".chat",
+        "key": "ChatManager",
+        "constructor": chatManager
     }
 ]
 
