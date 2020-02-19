@@ -1,5 +1,6 @@
 {
     "test": true,
+    "constuctrion": true,
     "sass": {
         "src": "/sass",
         "dest": "/public/style.css"

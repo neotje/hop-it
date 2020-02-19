@@ -3,26 +3,32 @@ extends layout
 block content
     script(src="javascripts/contact.js")
     section(class="landing")
-        form(class="contact__form")
-            h1 Contact formulier
+            form(class="contact__form")
+                if construct == false
 
-            input(class="text-input", type="email", name="email", placeholder="Email", autocomplete="email", required)
+                    h1 Contact formulier
 
-            input(class="text-input", type="password", name="password", placeholder="Wachtwoord*", autocomplete="new-password", required)
-            p(class="sub-text") *Wachtwoord is nodig voor verder contact via deze website.
+                    input(class="text-input", type="email", name="email", placeholder="Email", autocomplete="email", required)
 
-            div(class="form-field")
+                    input(class="text-input", type="password", name="password", placeholder="Wachtwoord*", autocomplete="new-password", required)
+                    p(class="sub-text") *Wachtwoord is nodig voor verder contact via deze website.
 
-                input(class="text-input", type="text", name="firstname", placeholder="Voornaam", autocomplete="given-name", required)
-                input(class="text-input", type="text", name="lastname", placeholder="Achternaam", autocomplete="family-name", required)
+                    div(class="form-field")
 
-                select(class="select-input", name="gender", placeholder="Geslacht", required)
-                    option(value="male") Man
-                    option(value="female") Vrouw
-                    option(value="other") Anders
+                        input(class="text-input", type="text", name="firstname", placeholder="Voornaam", autocomplete="given-name", required)
+                        input(class="text-input", type="text", name="lastname", placeholder="Achternaam", autocomplete="family-name", required)
 
-            textarea(class="text-input", rows="10", name="message" placeholder="Bericht...", required)
+                        select(class="select-input", name="gender", placeholder="Geslacht", required)
+                            option(value="male") Man
+                            option(value="female") Vrouw
+                            option(value="other") Anders
 
-            button(class="button--primary contact__form-submit", type="submit")
-                span Versturen
-                i(class='material-icons') send
+                    textarea(class="text-input", rows="10", name="message" placeholder="Bericht...", required)
+
+                    button(class="button--primary contact__form-submit", type="submit")
+                        span Versturen
+                        i(class='material-icons') send
+                else
+                    form(class='contact__form')
+                        h2 Email: <a href='mailto://neo@hopjes.net' target='_blank'>Neo@hopjes.net</a>
+                        
