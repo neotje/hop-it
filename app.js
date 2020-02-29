@@ -10,8 +10,6 @@ var proxy = require('express-http-proxy');
 var sassMiddleware = require('node-sass-middleware');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var userRouter = require('./routes/user');
 
 var app = express();
 
