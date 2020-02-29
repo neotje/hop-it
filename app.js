@@ -43,10 +43,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/me', userRouter);
-
-app.use('/test', proxy('localhost:8000'));
 
 for (const path in config.get("proxies")) {
     const port = config.get(`proxies.${path}.port`);
