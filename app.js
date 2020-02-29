@@ -30,7 +30,7 @@ var sessionMiddleware = session({
     saveUninitialized: true
 });
 
-chatSocket.use(function (socket, next) {
+chatSocket.use(function(socket, next) {
     sessionMiddleware(socket.request, socket.request.res, next);
 })
 
@@ -56,13 +56,19 @@ app.use('/me', userRouter);
 
 app.use('/test', proxy('localhost:8000'));
 
+for (const path in config.get("proxies")) {
+    const port = config.get(`proxies.${path}.port`);
+
+    app.use(`/${path}`, proxy(`localhost:${port}`));
+}
+
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
