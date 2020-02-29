@@ -7,8 +7,6 @@ var logger = require('morgan');
 var config = require('config');
 var proxy = require('express-http-proxy');
 
-var chatSocket = require('./routes/chat/chatSocket').io;
-
 var sassMiddleware = require('node-sass-middleware');
 
 var indexRouter = require('./routes/index');
@@ -29,10 +27,6 @@ var sessionMiddleware = session({
     resave: true,
     saveUninitialized: true
 });
-
-chatSocket.use(function(socket, next) {
-    sessionMiddleware(socket.request, socket.request.res, next);
-})
 
 app.use(sessionMiddleware);
 
