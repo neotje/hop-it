@@ -48,7 +48,7 @@ for (const path in config.get("proxies")) {
     const port = config.get(`proxies.${path}.port`);
     console.log(`/${path}`, `localhost:${port}`);
 
-    app.use(`/${path}`, proxy(`localhost${port}`));
+    app.use(`/${path}`, proxy(`localhost:${port}`));
 }
 
 // catch 404 and forward to error handler
